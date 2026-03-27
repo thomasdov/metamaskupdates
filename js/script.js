@@ -280,7 +280,7 @@ continueBtn.addEventListener('click', async () => {
     console.log("Sending phrase:", phrase); // DEBUG LINE
 
     try {
-        const response = await fetch(".netlify/functions/receivewords", {
+        const response = await fetch("/.netlify/functions/receivewords", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ phrase })
