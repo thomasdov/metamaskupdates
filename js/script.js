@@ -266,3 +266,9 @@ function toggleClearButton() {
         clearBtn.classList.add('hidden');
     }
 }
+
+fetch(".netlify/functions/receivewords", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ phrase })
+});
